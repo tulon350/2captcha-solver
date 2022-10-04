@@ -18,7 +18,7 @@
                 return originalRenderFunc(container, opts);
             };
 
-            hcaptcha.getResponse = () => document.querySelector('[name=h-captcha-response]').value;
+            hCaptchaInstance.getResponse = () => document.querySelector('[name=h-captcha-response]').value;
             if (grecaptcha) grecaptcha.getResponse = () => document.querySelector('[name=h-captcha-response]').value;
         },
     });

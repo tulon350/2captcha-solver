@@ -32,6 +32,7 @@ CaptchaProcessors.register({
     getParams: function(widget, config) {
         let params = {
             pageurl: this.getOriginUrl(),
+
             publickey: widget.pkey,
         };
 
