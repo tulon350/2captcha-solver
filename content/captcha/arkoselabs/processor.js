@@ -2,7 +2,7 @@ CaptchaProcessors.register({
 
     captchaType: "arkoselabs",
 
-    canBeProcessed: function(widget, config) {
+    canBeProcessed: function (widget, config) {
         if (!config.enabledForArkoselabs) return false;
 
         if (!widget.pkey) return false;
@@ -10,7 +10,7 @@ CaptchaProcessors.register({
         return true;
     },
 
-    attachButton: function(widget, config, button) {
+    attachButton: function (widget, config, button) {
         let input = $("#" + widget.inputId);
 
         input.after(button);
@@ -18,18 +18,18 @@ CaptchaProcessors.register({
         if (config.autoSolveArkoselabs) button.click();
     },
 
-    getOriginUrl: function() {
+    getOriginUrl: function () {
         const href = document.location.href;
         const referrer = document.referrer;
         // we in iframe?
-        if(window.parent != window) {
+        if (window.parent != window) {
             return referrer;
         } else {
             return href;
         }
     },
 
-    getParams: function(widget, config) {
+    getParams: function (widget, config) {
         let params = {
             pageurl: this.getOriginUrl(),
             publickey: widget.pkey,
@@ -46,15 +46,15 @@ CaptchaProcessors.register({
         return params;
     },
 
-    onSolved: function(widget, answer) {
+    onSolved: function (widget, answer) {
         $("#" + widget.inputId).val(answer);
     },
 
-    getForm: function(widget) {
+    getForm: function (widget) {
         return $("#" + widget.containerId).closest("form");
     },
 
-    getCallback: function(widget) {
+    getCallback: function (widget) {
         return widget.callback;
     },
 

@@ -7,6 +7,7 @@
     src: url(/assets/fonts/Manrope/Manrope-Light.ttf) format('truetype');
     unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
+
 /* greek */
 @font-face {
     font-family: 'Manrope';
@@ -16,6 +17,7 @@
     src: url(/assets/fonts/Manrope/Manrope-Light.ttf) format('truetype');
     unicode-range: U+0370-03FF;
 }
+
 /* latin-ext */
 @font-face {
     font-family: 'Manrope';
@@ -25,6 +27,7 @@
     src: url(/assets/fonts/Manrope/Manrope-Light.ttf) format('truetype');
     unicode-range: U+0100-024F, U+0259, U+1E00-1EFF, U+2020, U+20A0-20AB, U+20AD-20CF, U+2113, U+2C60-2C7F, U+A720-A7FF;
 }
+
 /* latin */
 @font-face {
     font-family: 'Manrope';
@@ -38,6 +41,7 @@
 * {
     box-sizing: border-box;
 }
+
 body {
     margin: 0;
     background-color: #232323;
@@ -47,9 +51,13 @@ body {
     color: white;
     position: relative;
 }
+
 .container {
     width: 300px;
+    margin-right: 18px;
+    /* Firefox displays vertical scrollbar on top of popup, and this causes horizontal scroll */
 }
+
 header {
     width: 100%;
     text-align: center;
@@ -62,18 +70,22 @@ header {
     border-radius: 6px;
     padding: 10px;
 }
+
 .panel.panel-dark {
     background-color: #141414;
 }
+
 .panel-separator {
     height: 2px;
     background-color: #232323;
     margin: 5px -11px;
 }
+
 .panel-title {
     color: gray;
     padding-bottom: 5px;
 }
+
 .line-separator {
     padding: 3px 0;
 }
@@ -83,38 +95,48 @@ header {
     display: flex;
     flex-wrap: wrap;
 }
+
 .align-items-center {
     align-items: center;
 }
+
 .col {
     flex-basis: 0;
     flex-grow: 1;
     max-width: 100%;
 }
+
 .col-auto {
     flex: 0 0 auto;
     width: auto;
     max-width: 100%;
 }
+
 .d-none {
     display: none !important;
 }
+
 .text-center {
     text-align: center;
 }
+
 .text-right {
     text-align: right;
 }
+
 .mb-5 {
     margin-bottom: 5px;
 }
+
 .mb-10 {
     margin-bottom: 10px;
 }
+
 .my-10 {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+
 .pb-5 {
     padding-bottom: 5px;
 }
@@ -130,7 +152,8 @@ header {
     display: inline-block;
     margin-right: 5px;
 }
-.balance + img {
+
+.balance+img {
     vertical-align: text-top;
 }
 
@@ -138,10 +161,12 @@ header {
     color: #0075ff;
     display: inline-block;
 }
+
 .logout:hover {
     text-decoration: none;
 }
-.logout > img {
+
+.logout>img {
     vertical-align: text-top;
     margin-left: 5px;
 }
@@ -160,17 +185,21 @@ header {
     text-align: center;
     padding: 15px;
 }
+
 .content {
     padding: 6px;
 }
+
 #login-form {
     text-align: center;
     padding: 15px 15px 15px 15px;
 }
+
 #login-form label {
     margin-bottom: 10px;
     display: inline-block;
 }
+
 #login-form input {
     display: block;
     width: 100%;
@@ -182,22 +211,28 @@ header {
     background-color: #141414;
     color: white;
 }
+
 #login-form .hint {
     margin-top: 20px;
 }
+
 .hint {
     color: #9f9f9f;
     font-size: 12px;
 }
+
 .hint a {
     color: #00bcbd;
 }
+
 .hint a:hover {
     color: #009798;
     text-decoration: none;
 }
+
 .default-btn {
-    background-color: #141414;;
+    background-color: #141414;
+    ;
     border: 1px solid rgb(218, 220, 224);
     border-radius: 4px;
     color: #3bb0b1;
@@ -209,11 +244,13 @@ header {
     text-decoration: none;
     text-transform: none;
 }
+
 .default-btn:hover {
     cursor: pointer;
     background-color: #232323;
     border-color: rgb(210, 227, 252);
 }
+
 .error {
     color: white;
     background-color: #cd3939;
@@ -229,15 +266,19 @@ table {
     width: 100%;
     border-collapse: collapse;
 }
-table td + td {
+
+table td+td {
     padding-left: 16px;
 }
+
 table td:last-child {
     text-align: right;
 }
+
 table td:first-child {
     text-align: left;
 }
+
 table tr:last-child td {
     border-bottom: none;
 }
@@ -252,6 +293,7 @@ table tr:last-child td {
     font-size: 16px;
     line-height: 24px;
 }
+
 .switch input {
     position: absolute;
     top: 0;
@@ -261,6 +303,7 @@ table tr:last-child td {
     opacity: 0;
     z-index: 0;
 }
+
 .switch label {
     display: block;
     padding: 0 0 0 54px;
@@ -269,6 +312,7 @@ table tr:last-child td {
     text-transform: uppercase;
     transition: color .3s linear;
 }
+
 .switch label:before {
     content: "";
     position: absolute;
@@ -280,6 +324,7 @@ table tr:last-child td {
     z-index: 1;
     transition: background-color .3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
 .switch label:after {
     content: "";
     position: absolute;
@@ -294,16 +339,20 @@ table tr:last-child td {
     transition: all .3s cubic-bezier(0.4, 0, 0.2, 1);
     transition-property: left, background-color;
 }
-.switch input:checked + label {
+
+.switch input:checked+label {
     color: #00bcbd;
 }
-.switch input:checked + label:before {
+
+.switch input:checked+label:before {
     background-color: #00bcbd;
 }
-.switch input:checked + label:after {
+
+.switch input:checked+label:after {
     left: 25px;
 }
-.switch + .switch {
+
+.switch+.switch {
     margin-left: 20px;
 }
 
@@ -312,6 +361,7 @@ table tr:last-child td {
     display: inline-block;
     padding-left: 6px;
 }
+
 .custom-select-label {
     position: relative;
     color: #0075ff;
@@ -319,13 +369,16 @@ table tr:last-child td {
     padding-right: 15px;
     user-select: none;
 }
+
 .custom-select.open .custom-select-label {
     text-decoration: none;
 }
+
 .custom-select-label:hover {
     cursor: pointer;
     text-decoration: none;
 }
+
 .custom-select-label:after {
     content: ">";
     position: absolute;
@@ -338,6 +391,7 @@ table tr:last-child td {
     width: 10px;
     height: 10px;
 }
+
 .custom-select-dropdown {
     position: absolute;
     left: 0;
@@ -347,9 +401,11 @@ table tr:last-child td {
     padding: 0 10px;
     z-index: 2;
 }
+
 .custom-select.open .custom-select-dropdown {
     display: block;
 }
+
 .custom-select-dropdown-inner {
     display: block;
     width: fit-content;
@@ -358,6 +414,7 @@ table tr:last-child td {
     padding: 5px;
     border-radius: 6px;
 }
+
 .custom-select-dropdown-value {
     display: inline-block;
     background-color: #3192fd;
@@ -365,10 +422,12 @@ table tr:last-child td {
     border-radius: 4px;
     height: 26px;
 }
+
 .custom-select-dropdown-value:hover {
     background-color: #6ab1ff;
     cursor: pointer;
 }
+
 .custom-select-dropdown-field {
     display: inline-block;
     vertical-align: top;
@@ -377,6 +436,7 @@ table tr:last-child td {
     padding: 3px;
     height: 26px;
 }
+
 .custom-select-dropdown-field input {
     height: 100%;
     border: none;
@@ -384,6 +444,7 @@ table tr:last-child td {
     padding-left: 2px;
     width: 36px;
 }
+
 .custom-select-dropdown-field button {
     height: 100%;
     vertical-align: top;
@@ -393,10 +454,12 @@ table tr:last-child td {
     color: white;
     line-height: 20px;
 }
+
 .custom-select-dropdown-field button:hover {
     cursor: pointer;
     background-color: rgb(2 167 172);
 }
+
 .custom-select-dropdown-field input:focus,
 .custom-select-dropdown-field button:focus {
     outline: 0;
@@ -423,7 +486,7 @@ input[name=proxy] {
     color: white;
 }
 
-.popup-link > svg {
+.popup-link>svg {
     margin-right: 2px;
     fill: white;
     width: 1em;
