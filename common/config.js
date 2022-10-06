@@ -17,6 +17,7 @@ var Config = {
         enabledForKeycaptcha: true,
         enabledForArkoselabs: true,
         enabledForLemin: true,
+        enabledForYandex: true,
         autoSolveNormal: false,
         autoSolveRecaptchaV2: false,
         autoSolveInvisibleRecaptchaV2: false,
@@ -28,6 +29,7 @@ var Config = {
         autoSolveArkoselabs: false,
         autoSolveGeetest_v4: false,
         autoSolveLemin: false,
+        autoSolveYandex: false,
         repeatOnErrorTimes: 0,
         repeatOnErrorDelay: 0,
         useProxy: false,
@@ -49,7 +51,7 @@ var Config = {
     },
 
     getAll: function () {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             chrome.storage.local.get('config', function (result) {
                 resolve(Config.joinObjects(Config.default, result.config));
             });
@@ -57,7 +59,7 @@ var Config = {
     },
 
     set: function (newData) {
-        return new Promise(function(resolve, reject) {
+        return new Promise(function (resolve, reject) {
             Config.getAll()
                 .then(data => {
                     chrome.storage.local.set({

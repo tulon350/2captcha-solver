@@ -2,13 +2,13 @@ CaptchaProcessors.register({
 
     captchaType: "lemin",
 
-    canBeProcessed: function(widget, config) {
+    canBeProcessed: function (widget, config) {
         if (!config.enabledForLemin) return false;
 
         return true;
     },
 
-    attachButton: function(widget, config, button) {
+    attachButton: function (widget, config, button) {
         let helper = this.getHelper(widget);
         if (helper.find('.captcha-solver').length !== 0) {
             return;
@@ -22,10 +22,10 @@ CaptchaProcessors.register({
 
         helper.append(button);
 
-        if (config.autoSolveGeetest) button.click();
+        if (config.autoSolveLemin) button.click();
     },
 
-    getParams: function(widget, config) {
+    getParams: function (widget, config) {
         let params = {
             url: location.href,
             captchaId: widget.captchaId,
@@ -39,7 +39,7 @@ CaptchaProcessors.register({
         return params;
     },
 
-    onSolved: function(widget, answer) {
+    onSolved: function (widget, answer) {
         let helper = this.getHelper(widget);
         let answer_res = {};
         try {
@@ -52,15 +52,15 @@ CaptchaProcessors.register({
         helper.find("input[name=lemin_answer]").val(answer_res.answer);
     },
 
-    getForm: function(widget) {
+    getForm: function (widget) {
         return this.getHelper(widget).closest("form");
     },
 
-    getCallback: function(widget) {
+    getCallback: function (widget) {
         return null;
     },
 
-    getHelper: function(widget) {
+    getHelper: function (widget) {
         let container = $("#" + widget.divId);
         return container.parent();
     },
