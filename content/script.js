@@ -1,7 +1,7 @@
 /*
  * Load necessary actions in main scope
  */
-Config.getAll().then(function(config) {
+Config.getAll().then(function (config) {
 
     let scripts = [
         ["content/core_helpers.js"],
@@ -24,12 +24,10 @@ Config.getAll().then(function(config) {
 
         let script = document.createElement('script');
         script.src = chrome.runtime.getURL(s[0]);
-        (document.head||document.documentElement).prepend(script);
+        (document.head || document.documentElement).prepend(script);
     });
 
 });
-
-
 
 
 /*
@@ -39,27 +37,25 @@ var CaptchaProcessors = {
 
     list: {},
 
-    register: function(processor) {
+    register: function (processor) {
         this.list[processor.captchaType] = processor;
     },
 
-    get: function(captchaType) {
+    get: function (captchaType) {
         return this.list[captchaType];
     },
 
 };
 
-
-
-
 /*
  * Main loop.
  * It iterates over found captcha widgets and processes them.
  */
-let CAPTCHA_WIDGETS_LOOP = setInterval(function() {
+let CAPTCHA_WIDGETS_LOOP = setInterval(function () {
     Config.getAll().then(config => {
         if (!config.isPluginEnabled) return;
         if (config.apiKey === null) return;
+        if (isBlockDomain(config.blackListDomain)) return;
 
         $("head").find("captcha-widget").each(function () {
             let widget = $(this);
@@ -86,15 +82,12 @@ let CAPTCHA_WIDGETS_LOOP = setInterval(function() {
 }, 2000);
 
 
-
-
-
 /*
  * Background communication
  */
 var background = chrome.runtime.connect({name: "content"});
 
-background.onMessage.addListener(function(msg) {
+background.onMessage.addListener(function (msg) {
 
     if (msg.action == "solve") {
         if (msg.request.messageId) {
@@ -104,20 +97,19 @@ background.onMessage.addListener(function(msg) {
         let button = getSolverButton(msg.request.captchaType, msg.request.widgetId);
 
         if (msg.error === undefined) {
-            changeSolverButtonState(button,"solved", chrome.i18n.getMessage("solved"));
+            changeSolverButtonState(button, "solved", chrome.i18n.getMessage("solved"));
             doActionsOnSuccess(msg);
         } else {
-            changeSolverButtonState(button,"error", msg.error);
+            changeSolverButtonState(button, "error", msg.error);
             tryAgain(button);
         }
     }
 
 });
 
-background.onDisconnect.addListener(function(port) {
+background.onDisconnect.addListener(function (port) {
     clearInterval(CAPTCHA_WIDGETS_LOOP);
 });
-
 
 
 function doActionsOnSuccess(msg) {
@@ -140,13 +132,28 @@ function doActionsOnSuccess(msg) {
         if (config.autoSubmitForms === true) {
             let timeout = parseInt(config.submitFormsDelay) * 1000;
 
-            setTimeout(function() {
+            setTimeout(function () {
                 if (!executeAutoSubmitRule(config.autoSubmitRules)) {
                     processor.getForm(widget).submit();
                 }
             }, timeout);
         }
     });
+}
+
+function isBlockDomain(blackListDomain) {
+    const domains = blackListDomain.split("\n") || [];
+    for (let i = 0; i < domains.length; i++) {
+        if (domains[i]) {
+            const regExp = new RegExp(domains[i]);
+            if (regExp.test(location.href)) {
+                console.log('Domain is block bu rule', domains[i]);
+                return true;
+            }
+        }
+    }
+
+    return false;
 }
 
 function executeAutoSubmitRule(rules) {
@@ -172,7 +179,7 @@ function tryAgain(button) {
         let countErrors = parseInt(button[0].dataset.countErrors || 0);
 
         if (config.repeatOnErrorTimes >= countErrors) {
-            setTimeout(function() {
+            setTimeout(function () {
                 button.click();
             }, config.repeatOnErrorDelay * 1000);
         }
@@ -206,7 +213,7 @@ function createSolverButton(captchaType, widgetId) {
         </div>
     `);
 
-    button.click(function() {
+    button.click(function () {
         if (!["ready", "error"].includes(button.attr("data-state"))) return;
 
         if (button[0].dataset.countErrors && button[0].dataset.disposable) {
@@ -217,7 +224,7 @@ function createSolverButton(captchaType, widgetId) {
 
         let widget = getWidgetInfo(captchaType, widgetId);
 
-        Config.getAll().then(function(config) {
+        Config.getAll().then(function (config) {
             let params = CaptchaProcessors.get(captchaType).getParams(widget, config);
             attachProxyParams(params, config);
 
@@ -247,7 +254,7 @@ function getSolverButton(captchaType, widgetId) {
 }
 
 function getWidgetInfo(captchaType, widgetId) {
-    let widget = $("head").find("captcha-widget[data-captcha-type=" + captchaType +"][data-widget-id=" + widgetId + "]");
+    let widget = $("head").find("captcha-widget[data-captcha-type=" + captchaType + "][data-widget-id=" + widgetId + "]");
 
     if (!widget.length) return null;
 
@@ -260,9 +267,9 @@ function prepareWidgetInfo(dataset) {
     for (let k in dataset) {
         w[k] = dataset[k];
 
-        if (w[k] === "null")  w[k] = null;
+        if (w[k] === "null") w[k] = null;
         if (w[k] === "false") w[k] = false;
-        if (w[k] === "true")  w[k] = true;
+        if (w[k] === "true") w[k] = true;
     }
 
     return w;
@@ -272,8 +279,8 @@ function prepareWidgetInfo(dataset) {
 /*
  * Communication with web page
  */
-let webPageMsgInterval = setInterval(function() {
-    $("body > solver-ext-messages").children().each(function() {
+let webPageMsgInterval = setInterval(function () {
+    $("body > solver-ext-messages").children().each(function () {
         let msg = $(this)[0];
 
         if (!msg.dataset.received) {
@@ -327,18 +334,17 @@ function setWebPageMessageResponse(message, response) {
 }
 
 
-
 /*
  * ContextMenu helper
  */
 let contextMenuEl = null;
 
-document.addEventListener("contextmenu", function(event){
+document.addEventListener("contextmenu", function (event) {
     contextMenuEl = event.target;
 }, true);
 
-chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
-    if(request.command == "getContextMenuEl") {
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+    if (request.command == "getContextMenuEl") {
         sendResponse({xpath: getXPath(contextMenuEl)});
         if (request.element == 'input') {
             $('.twocaptcha-toast .close').click();
@@ -365,9 +371,9 @@ function showToast(message) {
         toastEl.addClass('visible');
     }, 50);
 
-    toastEl.find('button.close').click(function(e) {
+    toastEl.find('button.close').click(function (e) {
         toastEl.removeClass('visible');
-        setTimeout(function() {
+        setTimeout(function () {
             toastEl.remove();
         }, 300);
     });
@@ -377,7 +383,7 @@ function getXPath(node) {
     var comp, comps = [];
     var parent = null;
     var xpath = '';
-    var getPos = function(node) {
+    var getPos = function (node) {
         var position = 1, curNode;
         if (node.nodeType == Node.ATTRIBUTE_NODE) {
             return null;

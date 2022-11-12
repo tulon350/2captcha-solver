@@ -35,6 +35,7 @@ var Config = {
         useProxy: false,
         proxytype: "HTTP",
         proxy: "",
+        blackListDomain: "",
         normalSources: [],
         autoSubmitRules: [{
             url_pattern: "(2|ru)captcha.com/demo",
