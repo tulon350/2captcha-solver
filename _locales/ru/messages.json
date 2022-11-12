@@ -163,6 +163,6 @@
     "message": "Удалить"
   },
   "blackListDomain": {
-    "message": "Domain blacklist"
+    "message": "Черный список доменов"
   }
 }

@@ -163,6 +163,6 @@
     "message": "Borrar"
   },
   "blackListDomain": {
-    "message": "Domain blacklist"
+    "message": "Lista negra de dominio"
   }
 }
